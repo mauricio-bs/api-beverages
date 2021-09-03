@@ -1,11 +1,13 @@
 import Sequelize, { Model } from 'sequelize'
-import bcrypt from 'bcryptjs'
+import bcrypt from 'bcrypt'
 
 class User extends Model {
   static init(sequelize) {
     super.init(
       {
+        id: Sequelize.UUID,
         name: Sequelize.STRING,
+        username: Sequelize.STRING,
         email: Sequelize.STRING,
         password: Sequelize.VIRTUAL,
         password_hash: Sequelize.STRING,
@@ -15,13 +17,17 @@ class User extends Model {
       }
     )
 
-    this.addHook('beforeSave', async (user) => {
+    this.beforeSave(async (user) => {
       if (user.password) {
-        user.password_hash = await bcrypt.password_hash(user.password, 10)
+        user.password_hash = await bcrypt.hash(user.password, 10)
       }
     })
 
     return this
+  }
+
+  checkPassword(password) {
+    return bcrypt.compare(password, this.password_hash)
   }
 }
 

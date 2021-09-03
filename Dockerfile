@@ -1,12 +1,12 @@
 FROM node:lts-alpine
 
-RUN mkdir -p /home/node/api/node_modules && chown -R node:node /home
+# RUN mkdir -p /home/app/api/node_modules && chown -R node:node /home/app/api
 
-WORKDIR /home/node/api
+# USER node
 
-COPY package.json yarn.* ./
+WORKDIR /home/app/api
 
-USER node
+COPY package.json yarn* ./
 
 RUN yarn
 
