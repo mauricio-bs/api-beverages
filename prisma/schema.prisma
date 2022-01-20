@@ -1,0 +1,197 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id          String       @id @default(uuid())
+  name        String
+  email       String       @unique
+  password    String
+  birthDate   String?
+  admin       Boolean      @default(false)
+  isActive    Boolean      @default(true)
+  // Foreign Keys
+  userAddress UserAddress?
+  Sale        Sale[]
+  Payment     Payment[]
+  // Timestamps
+  createdAt   DateTime     @default(now())
+  updatedAt   DateTime     @updatedAt
+}
+
+model UserAddress {
+  id             String   @id @default(uuid())
+  zipCode        String
+  neighborhood   String
+  street         String
+  number         String
+  complement     String
+  referencePoint String
+  // Foreign Keys
+  country        Country  @relation(fields: [countryId], references: [id])
+  countryId      Int
+  state          State    @relation(fields: [stateId], references: [id])
+  stateId        Int
+  city           City     @relation(fields: [cityId], references: [id])
+  cityId         Int
+  user           User     @relation(fields: [userId], references: [id])
+  userId         String   @unique
+  // Timestamps
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+}
+
+model Country {
+  id          Int           @id @default(autoincrement())
+  name        String
+  code        Int
+  // Foreign Keys
+  state       State[]
+  userAddress UserAddress[]
+  // Timestamps
+  createdAt   DateTime      @default(now())
+  updatedAt   DateTime      @updatedAt
+}
+
+model State {
+  id          Int           @id @default(autoincrement())
+  name        String
+  // Foreign Keys
+  country     Country       @relation(fields: [countryId], references: [id])
+  countryId   Int
+  City        City[]
+  userAddress UserAddress[]
+  // Timestamps
+  createdAt   DateTime      @default(now())
+  updatedAt   DateTime      @updatedAt
+}
+
+model City {
+  id          Int           @id @default(autoincrement())
+  name        String
+  // Foreign Keys
+  state       State         @relation(fields: [stateId], references: [id])
+  stateId     Int
+  userAddress UserAddress[]
+  // Timestamps
+  createdAt   DateTime      @default(now())
+  updatedAt   DateTime      @updatedAt
+}
+
+model Beverage {
+  id             String     @id @default(uuid())
+  name           String
+  description    String
+  sotck_quantity Int
+  price          Decimal
+  path           String
+  isActive       Boolean
+  // Foreign Keys
+  categoryId     Category[]
+  Sale           Sale?      @relation(fields: [saleId], references: [id])
+  saleId         String?
+  // Timestamps
+  createdAt      DateTime   @default(now())
+  updatedAt      DateTime   @updatedAt
+}
+
+model Category {
+  id          String    @id @default(uuid())
+  description String
+  isActive    Boolean
+  // Foreign Keys
+  beverages   Beverage? @relation(fields: [beverageId], references: [id])
+  beverageId  String?
+  // Timestamps
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+}
+
+model Sale {
+  id                 String     @id @default(uuid())
+  amount             Decimal
+  discountPercentage Decimal?
+  discountValue      Decimal?
+  status             SaleStatus @default(PENDENTE)
+  date               DateTime   @default(now())
+  // Foreign Keys
+  beverages          Beverage[]
+  user               User       @relation(fields: [userId], references: [id])
+  userId             String
+  // Timestamps
+  createdAt          DateTime   @default(now())
+  updatedAt          DateTime   @updatedAt
+}
+
+enum SaleStatus {
+  PENDENTE
+  PAGO
+  EM_PREPARO
+  EM_TRAJETO
+  ENTREGUE
+  CANCELADO
+}
+
+model Payment {
+  id               String           @id @default(uuid())
+  amount           Decimal
+  status           SaleStatus       @default(PENDENTE)
+  // Foreign Keys
+  user             User             @relation(fields: [userId], references: [id])
+  userId           String
+  paymentCondition PaymentCondition @relation(fields: [conditionId], references: [id])
+  conditionId      Int
+  paymentForm      PaymentForm      @relation(fields: [paymentFormId], references: [id])
+  paymentFormId    Int
+  // Timestamps
+  createdAt        DateTime         @default(now())
+  updatedAt        DateTime         @updatedAt
+}
+
+model PaymentCondition {
+  id          Int       @id @default(autoincrement())
+  description String
+  parcels     Int
+  isActive    Boolean
+  // Foreign Keys
+  payments    Payment[]
+  // Timestamps
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+}
+
+model PaymentForm {
+  id             Int             @id @default(autoincrement())
+  description    String
+  isActive       Boolean
+  //Foreign Keys
+  paymentParcels PaymentParcel[]
+  payments       Payment[]
+  // Timestamps
+  createdAt      DateTime        @default(now())
+  updatedAt      DateTime        @updatedAt
+}
+
+model PaymentParcel {
+  id            String      @id @default(uuid())
+  totalParcels  Int
+  currentParcel Int
+  amount        Decimal
+  payDate       DateTime?
+  dueDate       DateTime
+  status        SaleStatus  @default(PENDENTE)
+  // Foreign Keys
+  paymentForm   PaymentForm @relation(fields: [paymentFormId], references: [id])
+  paymentFormId Int
+  // Timestamps
+  createdAt     DateTime    @default(now())
+  updatedAt     DateTime    @updatedAt
+}

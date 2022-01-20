@@ -1,32 +1,41 @@
 version: '3'
 
 services:
-
-  api:
+  api-beverages:
     container_name: api
     build: .
     command: yarn dev
     volumes:
-      - .:/home/app/api
+      - .:/home/app/api-beverages
+      - /home/app/api-beverages/node_modules
     depends_on:
-      - postgres
+      - postgres-beverages
     networks:
       - app-connect
     ports:
       - '3000:3000'
 
-  postgres:
-    container_name: postgres
+  postgres-beverages:
+    container_name: postgres-beverages
     image: postgres:13
     restart: unless-stopped
     volumes:
       - postgres-data:/data
-    ports: 
+    ports:
       - '5432:5432'
-    environment: 
+    environment:
       POSTGRES_DB: ${DB_NAME}
       POSTGRES_USER: ${DB_USER}
-      POSTGRES_PASSWORD: ${DB_PASS} 
+      POSTGRES_PASSWORD: ${DB_PASS}
+    networks:
+      - app-connect
+
+  redis-beverages:
+    container_name: redis-beverages
+    image:
+    volumes:
+    ports:
+      -
     networks:
       - app-connect
 
@@ -35,4 +44,4 @@ volumes:
 
 networks:
   app-connect:
-      driver: bridge
+    driver: bridge
