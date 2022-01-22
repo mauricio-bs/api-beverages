@@ -1,10 +1,11 @@
 import { hash } from 'bcryptjs'
+
 import prisma from '../../../prisma/prisma'
 import { User } from '../../entities/User'
 import { IUsersRepository } from '../IUsersRepository'
 
 export class PostgresUsersRepository implements IUsersRepository {
-  async findById(id: string): Promise<User> {
+  async findById(id: string): Promise<User | null> {
     try {
       const user = await prisma.user.findUnique({ where: { id } })
       if (!user) throw new Error('User not found')
@@ -15,7 +16,7 @@ export class PostgresUsersRepository implements IUsersRepository {
     }
   }
 
-  async findByEmail(email: string): Promise<User> {
+  async findByEmail(email: string): Promise<User | null> {
     try {
       const user = await prisma.user.findUnique({ where: { email } })
 

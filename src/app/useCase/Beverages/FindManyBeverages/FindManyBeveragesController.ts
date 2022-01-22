@@ -17,7 +17,7 @@ export class FindManyBeveragesController {
 
       return res.status(200).json(beverages)
     } catch (err) {
-      return res.status(400).json({ message: (err as Error).message })
+      return res.status(400).json({ message: err.message })
     }
   }
 }

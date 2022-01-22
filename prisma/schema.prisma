@@ -87,32 +87,41 @@ model City {
 }
 
 model Beverage {
-  id             String     @id @default(uuid())
-  name           String
-  description    String
-  sotck_quantity Int
-  price          Decimal
-  path           String
-  isActive       Boolean
+  id                 String               @id @default(uuid())
+  name               String
+  description        String
+  sotck_quantity     Int
+  price              Decimal
+  path               String
+  isActive           Boolean
   // Foreign Keys
-  categoryId     Category[]
-  Sale           Sale?      @relation(fields: [saleId], references: [id])
-  saleId         String?
+  BeverageCategories BeverageCategories[]
+  Sale               Sale?                @relation(fields: [saleId], references: [id])
+  saleId             String?
   // Timestamps
-  createdAt      DateTime   @default(now())
-  updatedAt      DateTime   @updatedAt
+  createdAt          DateTime             @default(now())
+  updatedAt          DateTime             @updatedAt
 }
 
 model Category {
-  id          String    @id @default(uuid())
+  id          Int                  @id @default(autoincrement())
   description String
   isActive    Boolean
   // Foreign Keys
-  beverages   Beverage? @relation(fields: [beverageId], references: [id])
-  beverageId  String?
+  beverages   BeverageCategories[]
   // Timestamps
-  createdAt   DateTime  @default(now())
-  updatedAt   DateTime  @updatedAt
+  createdAt   DateTime             @default(now())
+  updatedAt   DateTime             @updatedAt
+}
+
+model BeverageCategories {
+  id         Int      @id @default(autoincrement())
+  // Foreign Keys
+  beverage   Beverage @relation(fields: [beverageId], references: [id])
+  beverageId String
+  category   Category @relation(fields: [categoryId], references: [id])
+  categoryId Int
+  // Timestamps
 }
 
 model Sale {

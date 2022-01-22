@@ -1,5 +1,5 @@
-import { ICreateBeverageRequestDTO } from './CreateBeverageDTO'
 import { IBeverageRepository } from './../../../repositores/IBeveragesRepository'
+import { ICreateBeverageRequestDTO } from './CreateBeverageDTO'
 
 export class CreateBeverageUseCase {
   constructor(private beveragesRepository: IBeverageRepository) {}

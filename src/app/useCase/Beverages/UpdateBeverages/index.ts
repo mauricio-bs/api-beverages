@@ -1,8 +1,8 @@
-import { PostgresBeverageRepository } from './../../../repositores/implementations/PostgresBeveragesRepository'
+import { PostgresBeveragesRepository } from './../../../repositores/implementations/PostgresBeveragesRepository'
 import { UpdateBeverageController } from './UpdateBeverageController'
 import { UpdateBeverageUseCase } from './UpdateBeverageUseCase'
 
-const postgresBeveragesRepositories = new PostgresBeverageRepository()
+const postgresBeveragesRepositories = new PostgresBeveragesRepository()
 
 const updateBeverageUseCase = new UpdateBeverageUseCase(
   postgresBeveragesRepositories

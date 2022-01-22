@@ -1,6 +1,6 @@
 import { FindOneBeveragesUseCase } from '../FindOneBeverage/FindoneBeverageUseCase'
-import { FindOneBeverageController } from './../FindOneBeverage/FindoneBeverageController'
 import { PostgresBeveragesRepository } from './../../../repositores/implementations/PostgresBeveragesRepository'
+import { FindOneBeverageController } from './../FindOneBeverage/FindoneBeverageController'
 
 const postgresBeverageRepository = new PostgresBeveragesRepository()
 

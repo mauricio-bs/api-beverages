@@ -5,7 +5,7 @@ export class User {
   public name: string
   public email: string
   public password: string
-  public birthDate: string | Date
+  public birthDate: string | null
   public admin: boolean
   public isActive: boolean
 

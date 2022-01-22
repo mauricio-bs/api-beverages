@@ -28,7 +28,8 @@
     "prettier/prettier": "error",
     "no-unused-vars": "warn",
     "prefer-const": "off",
-    "non-useless-constructor": "off",
+    "no-useless-constructor": "off",
+    "no-undef": "off",
     "camelCase": "off",
     "import-helpers/order-imports": [
       "warn",

@@ -22,7 +22,7 @@ export class UpdateUserController {
 
       return res.status(202).send()
     } catch (err) {
-      return res.status(400).json({ message: (err as Error).message })
+      return res.status(400).json({ message: err.message })
     }
   }
 }

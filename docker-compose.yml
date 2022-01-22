@@ -13,7 +13,7 @@ services:
     networks:
       - app-connect
     ports:
-      - '3000:3000'
+      - '5000:5000'
 
   postgres-beverages:
     container_name: postgres-beverages
@@ -32,10 +32,9 @@ services:
 
   redis-beverages:
     container_name: redis-beverages
-    image:
-    volumes:
+    image: redis:latest
     ports:
-      -
+      - '6379:6379'
     networks:
       - app-connect
 

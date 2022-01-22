@@ -1,6 +1,5 @@
 import { User } from './../../../entities/User'
 import { IUsersRepository } from './../../../repositores/IUsersRepository'
-
 import { ICreateUserRequestDTO } from './UpdateUserDTO'
 
 export class UpdateUserUseCase {
@@ -11,7 +10,10 @@ export class UpdateUserUseCase {
       userInformations.email
     )
 
-    if (emailAlreadyRegistered.id !== userInformations.id) {
+    if (
+      !!emailAlreadyRegistered &&
+      emailAlreadyRegistered.id !== userInformations.id
+    ) {
       throw new Error('Email already registered')
     }
 

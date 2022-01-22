@@ -1,6 +1,6 @@
-import { IBeverageRepository } from './../IBeveragesRepository'
-import { Beverage } from './../../entities/Beverage'
 import prisma from '../../../prisma/prisma'
+import { Beverage } from './../../entities/Beverage'
+import { IBeverageRepository } from './../IBeveragesRepository'
 
 export class PostgresBeveragesRepository implements IBeverageRepository {
   async findById(id: string): Promise<Beverage> {
@@ -35,6 +35,7 @@ export class PostgresBeveragesRepository implements IBeverageRepository {
 
       categories && conditions.push({ categoryId: { equals: categories } })
       isActive && conditions.push({ isActive: { equals: isActive } })
+
       if (name) {
         const arrQuery = name.split(' ')
         conditions.push({ name: { hasEvery: arrQuery } })

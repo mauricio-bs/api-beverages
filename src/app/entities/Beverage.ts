@@ -1,5 +1,6 @@
 import { v4 } from 'uuid'
-import { Category } from './Category'
+
+import { BeverageCategories } from './BeverageCategories'
 
 export class Beverage {
   public id?: string
@@ -7,7 +8,7 @@ export class Beverage {
   public description?: string
   public imageUrl?: string
   public isActive: boolean
-  public categories?: Category[]
+  public categories?: BeverageCategories[]
 
   constructor(props: Omit<Beverage, 'id'>, id?: string) {
     Object.assign(this, props)

@@ -14,4 +14,6 @@ COPY . .
 
 EXPOSE 3000
 
-ENTRYPOINT ["./init.sh"]
+RUN chmod +x ./init.sh
+
+ENTRYPOINT [ "init.sh" ]

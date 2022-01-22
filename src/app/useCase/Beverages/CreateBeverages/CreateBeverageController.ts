@@ -1,4 +1,5 @@
 import { Request, Response } from 'express'
+
 import { CreateBeverageUseCase } from './CreateBeverageUseCase'
 
 export class CreateBeverageController {
@@ -18,7 +19,7 @@ export class CreateBeverageController {
 
       return res.status(201).send()
     } catch (err) {
-      return res.status(400).json({ message: (err as Error).message })
+      return res.status(400).json({ message: err.message })
     }
   }
 }

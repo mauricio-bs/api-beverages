@@ -1,8 +1,9 @@
-import { PostgresUsersRepository } from './../../repositores/implementations/PostgresUsersRepository'
-import * as yup from 'yup'
-import jwt from 'jsonwebtoken'
-import authConfig from '../../../config/auth'
 import { compare } from 'bcryptjs'
+import jwt from 'jsonwebtoken'
+import * as yup from 'yup'
+
+import authConfig from '../../../config/auth'
+import { PostgresUsersRepository } from './../../repositores/implementations/PostgresUsersRepository'
 
 export class SignInUseCase {
   constructor(private usersRepository: PostgresUsersRepository) {}
@@ -23,16 +24,21 @@ export class SignInUseCase {
     const user = await this.usersRepository.findByEmail(email)
 
     if (!user) userEmailOrPasswordIncorrect()
+    else {
+      if (!compare(password, user.password)) userEmailOrPasswordIncorrect()
 
-    if (!compare(password, user.password)) userEmailOrPasswordIncorrect()
-
-    return {
-      id: user.id,
-      email,
-      name: user.name,
-      token: jwt.sign({ id: user.id, userName: user.name }, authConfig.secret, {
-        expiresIn: authConfig.expiresIn
-      })
+      return {
+        id: user.id,
+        email,
+        name: user.name,
+        token: jwt.sign(
+          { id: user.id, userName: user.name },
+          authConfig.secret,
+          {
+            expiresIn: authConfig.expiresIn
+          }
+        )
+      }
     }
   }
 }

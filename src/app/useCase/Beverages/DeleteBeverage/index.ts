@@ -1,6 +1,6 @@
 import { PostgresBeveragesRepository } from './../../../repositores/implementations/PostgresBeveragesRepository'
-import { DeleteBeverageUseCase } from './DeleteBeverageUseCase'
 import { DeleteBeverageController } from './DeleteBeverageController'
+import { DeleteBeverageUseCase } from './DeleteBeverageUseCase'
 
 const postgresBeveragesRepository = new PostgresBeveragesRepository()
 

@@ -20,7 +20,7 @@ export class CreateUserController {
 
       return res.status(201).send()
     } catch (err) {
-      return res.status(400).json({ message: (err as Error).message })
+      return res.status(400).json({ message: err.message })
     }
   }
 }

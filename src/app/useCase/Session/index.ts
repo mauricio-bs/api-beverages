@@ -1,6 +1,6 @@
-import { SignInUseCase } from './SignInUseCase'
-import { SignInController } from './SignInController'
 import { PostgresUsersRepository } from './../../repositores/implementations/PostgresUsersRepository'
+import { SignInController } from './SignInController'
+import { SignInUseCase } from './SignInUseCase'
 
 const postgresUsersRepository = new PostgresUsersRepository()
 

@@ -1,5 +1,6 @@
-import { SignInUseCase } from './SignInUseCase'
 import { Request, Response } from 'express'
+
+import { SignInUseCase } from './SignInUseCase'
 
 export class SignInController {
   constructor(private signInUseCase: SignInUseCase) {}
@@ -11,7 +12,7 @@ export class SignInController {
 
       return res.status(200).json(token)
     } catch (err) {
-      return res.status(400).json({ message: (err as Error).message })
+      return res.status(400).json({ message: err.message })
     }
   }
 }
