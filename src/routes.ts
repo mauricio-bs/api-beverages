@@ -1,30 +1,30 @@
 import { Router } from 'express'
+
 // Session
+import auth from './app/middlewares/auth'
 import { signInController } from './app/useCase/Session'
 // User
 import { createUserController } from './app/useCase/Users/CreateUser'
-import { updateUserController } from './app/useCase/Users/UpdateUser'
 import { deleteUserController } from './app/useCase/Users/DeleteUser'
-import { findOneUserController } from './app/useCase/Users/FindOneUser'
 import { findManyUsersController } from './app/useCase/Users/FindManyUsers'
-
-import auth from './app/middlewares/auth'
+import { findOneUserController } from './app/useCase/Users/FindOneUser'
+import { updateUserController } from './app/useCase/Users/UpdateUser'
 
 const routes = Router()
 
 // SignIn
-routes.post('/api', signInController.handle)
+routes.post('/login', (req, res) => signInController.handle(req, res))
 
 // Create User
-routes.post('/api/users', createUserController.handle)
+routes.post('/users', (req, res) => createUserController.handle(req, res))
 
 routes.use(auth)
 
 // Users
-routes.get('/api/users', findManyUsersController.handle)
-routes.get('/api/users/:id', findOneUserController.handle)
-routes.put('/api/users/:id', updateUserController.handle)
-routes.delete('/api/users/:id', deleteUserController.handle)
+routes.get('/users', (req, res) => findManyUsersController.handle(req, res))
+routes.get('/users/:id', (req, res) => findOneUserController.handle(req, res))
+routes.put('/users/:id', (req, res) => updateUserController.handle(req, res))
+routes.delete('/users/:id', (req, res) => deleteUserController.handle(req, res))
 
 // Beverages
 // routes.get('/api/beverages', BeverageController.index)
