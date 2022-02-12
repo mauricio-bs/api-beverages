@@ -6,15 +6,17 @@ export class UpdateUserUseCase {
   constructor(private usersRepository: IUsersRepository) {}
 
   async execute(userInformations: ICreateUserRequestDTO) {
-    const emailAlreadyRegistered = await this.usersRepository.findByEmail(
-      userInformations.email
-    )
+    if (userInformations?.email) {
+      const emailAlreadyRegistered = await this.usersRepository.findByEmail(
+        userInformations.email
+      )
 
-    if (
-      !!emailAlreadyRegistered &&
-      emailAlreadyRegistered.id !== userInformations.id
-    ) {
-      throw new Error('Email already registered')
+      if (
+        !!emailAlreadyRegistered &&
+        emailAlreadyRegistered.id !== userInformations.id
+      ) {
+        throw new Error('Email already registered')
+      }
     }
 
     const user = new User(userInformations)

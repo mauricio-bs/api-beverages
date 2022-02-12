@@ -6,7 +6,7 @@ export class DeleteUserController {
   constructor(private deleteUserUseCase: DeleteUserUseCase) {}
 
   async handle(req: Request, res: Response) {
-    const { id } = req.body
+    const { id } = req.params
     try {
       await this.deleteUserUseCase.execute(id)
 
