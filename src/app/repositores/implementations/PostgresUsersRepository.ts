@@ -12,7 +12,7 @@ export class PostgresUsersRepository implements IUsersRepository {
 
       return user
     } catch (err) {
-      throw new Error(err.message)
+      throw new Error(err)
     }
   }
 
@@ -22,7 +22,7 @@ export class PostgresUsersRepository implements IUsersRepository {
 
       return user
     } catch (err) {
-      throw new Error(err.message)
+      throw new Error(err)
     }
   }
 
@@ -39,7 +39,7 @@ export class PostgresUsersRepository implements IUsersRepository {
 
       return users
     } catch (err) {
-      throw new Error(err.message)
+      throw new Error(err)
     }
   }
 
@@ -53,7 +53,7 @@ export class PostgresUsersRepository implements IUsersRepository {
         data: { name, email, password, admin, isActive }
       })
     } catch (err) {
-      throw new Error(err.message)
+      throw new Error(err)
     }
   }
 
@@ -66,7 +66,7 @@ export class PostgresUsersRepository implements IUsersRepository {
         data: { name, email, password, admin, isActive }
       })
     } catch (err) {
-      throw new Error(err.message)
+      throw new Error(err)
     }
   }
 
@@ -74,7 +74,7 @@ export class PostgresUsersRepository implements IUsersRepository {
     try {
       await prisma.user.delete({ where: { id } })
     } catch (err) {
-      throw new Error(err.message)
+      throw new Error(err)
     }
   }
 }
