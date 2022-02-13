@@ -32,7 +32,7 @@ services:
 
   redis-beverages:
     container_name: redis-beverages
-    image: redis:latest
+    image: redis:6
     ports:
       - '6379:6379'
     networks:
