@@ -1,7 +1,14 @@
 import { Router } from 'express'
 
-// Session
+// Middlewares
 import auth from './app/middlewares/auth'
+// Beverages
+import { createBeverageController } from './app/useCase/Beverages/CreateBeverages'
+import { deleteBeverageController } from './app/useCase/Beverages/DeleteBeverage'
+import { findManyBeverageController } from './app/useCase/Beverages/FindManyBeverages'
+import { findOneBeverageController } from './app/useCase/Beverages/FindOneBeverage'
+import { updateBeverageController } from './app/useCase/Beverages/UpdateBeverages'
+// Session
 import { signInController } from './app/useCase/Session'
 // User
 import { createUserController } from './app/useCase/Users/CreateUser'
@@ -9,6 +16,8 @@ import { deleteUserController } from './app/useCase/Users/DeleteUser'
 import { findManyUsersController } from './app/useCase/Users/FindManyUsers'
 import { findOneUserController } from './app/useCase/Users/FindOneUser'
 import { updateUserController } from './app/useCase/Users/UpdateUser'
+// Images Upload
+import upload from './config/multer'
 
 const routes = Router()
 
@@ -27,10 +36,20 @@ routes.put('/users/:id', (req, res) => updateUserController.handle(req, res))
 routes.delete('/users/:id', (req, res) => deleteUserController.handle(req, res))
 
 // Beverages
-// routes.get('/api/beverages', BeverageController.index)
-// routes.get('/api/beverages/:id', BeverageController.show)
-// routes.post('/api/beverages', BeverageController.store)
-// routes.put('/api/beverages/:id', BeverageController.update)
-// routes.delete('/api/beverages/:id', BeverageController.delete)
+routes.get('/api/beverages', (req, res) =>
+  findManyBeverageController.handle(req, res)
+)
+routes.get('/api/beverages/:id', (req, res) =>
+  findOneBeverageController.handle(req, res)
+)
+routes.post('/api/beverages', upload.single('file'), (req, res) =>
+  createBeverageController.handle(req, res)
+)
+routes.put('/api/beverages/:id', upload.single('file'), (req, res) =>
+  updateBeverageController.handle(req, res)
+)
+routes.delete('/api/beverages/:id', (req, res) =>
+  deleteBeverageController.handle(req, res)
+)
 
 export default routes

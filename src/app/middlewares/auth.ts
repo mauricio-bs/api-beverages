@@ -1,5 +1,6 @@
 import { NextFunction, Request, Response } from 'express'
-import jwt from 'jsonwebtoken'
+import { verify } from 'jsonwebtoken'
+
 import authConfig from '../../config/auth'
 
 export default async (
@@ -11,10 +12,10 @@ export default async (
 
   if (!authToken) res.status(401).json({ error: 'Token not provided' })
 
-  const token = authToken.split(' ')[1]
+  const [, token] = authToken.split(' ')
 
   try {
-    jwt.verify(token, authConfig.secret, (err: any, decoded: any) => {
+    verify(token, authConfig.secret, (err: any, decoded: any) => {
       if (err) throw new Error()
 
       req.userId = decoded.id
