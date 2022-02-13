@@ -5,14 +5,15 @@ export class CreateCategoryUseCase {
   constructor(private categoriesRepository: ICategoriesRepository) {}
 
   async execute(categoryInfo: CreateCategoryRequestDTO) {
-    const { name, imageUrl } = categoryInfo
+    const { name, imageUrl, isActive } = categoryInfo
 
-    const nameAlreadyExists = await this.categoriesRepository.findByName(name)
+    const categoryNameAlreadyExists =
+      await this.categoriesRepository.findByName(name)
 
-    if (nameAlreadyExists) {
+    if (categoryNameAlreadyExists) {
       throw new Error('Category name already exists, please try another name')
     }
 
-    await this.categoriesRepository.store(name, imageUrl)
+    await this.categoriesRepository.store({ name, imageUrl, isActive })
   }
 }

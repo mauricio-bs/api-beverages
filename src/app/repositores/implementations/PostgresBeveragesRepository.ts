@@ -3,25 +3,25 @@ import { Beverage } from './../../entities/Beverage'
 import { IBeverageRepository } from './../IBeveragesRepository'
 
 export class PostgresBeveragesRepository implements IBeverageRepository {
-  async findById(id: string): Promise<Beverage> {
+  async findById(id: string): Promise<Beverage | null> {
     try {
       const beverage = await prisma.beverage.findUnique({ where: { id } })
       if (!beverage) throw new Error('Beverage not found')
 
       return beverage
     } catch (err) {
-      throw new Error(err.message)
+      throw new Error(err)
     }
   }
 
-  async findByName(name: string): Promise<Beverage> {
+  async findByName(name: string): Promise<Beverage | null> {
     try {
-      const beverage = await prisma.beverage.findUnique({ where: { name } })
+      const beverage = await prisma.beverage.findFirst({ where: { name } })
       if (!beverage) throw new Error('Beverage not found')
 
       return beverage
     } catch (err) {
-      throw new Error(err.message)
+      throw new Error(err)
     }
   }
 
@@ -51,7 +51,7 @@ export class PostgresBeveragesRepository implements IBeverageRepository {
 
       return beverages
     } catch (err) {
-      throw new Error(err.message)
+      throw new Error(err)
     }
   }
 
@@ -63,7 +63,7 @@ export class PostgresBeveragesRepository implements IBeverageRepository {
         data: { name, description, categories, imageUrl, isActive }
       })
     } catch (err) {
-      throw new Error(err.message)
+      throw new Error(err)
     }
   }
 
@@ -76,7 +76,7 @@ export class PostgresBeveragesRepository implements IBeverageRepository {
         data: { name, description, categories, imageUrl, isActive }
       })
     } catch (err) {
-      throw new Error(err.message)
+      throw new Error(err)
     }
   }
 
@@ -84,7 +84,7 @@ export class PostgresBeveragesRepository implements IBeverageRepository {
     try {
       await prisma.beverage.delete({ where: { id } })
     } catch (err) {
-      throw new Error(err.message)
+      throw new Error(err)
     }
   }
 }

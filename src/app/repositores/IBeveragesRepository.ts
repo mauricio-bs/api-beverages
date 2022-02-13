@@ -2,8 +2,8 @@ import { Beverage } from './../entities/Beverage'
 
 export interface IBeverageRepository {
   // Searches
-  findById(id: string): Promise<Beverage>
-  findByName(name: string): Promise<Beverage>
+  findById(id: string): Promise<Beverage | null>
+  findByName(name: string): Promise<Beverage | null>
   // Massive Search
   findMany(
     categories?: Array<string>,

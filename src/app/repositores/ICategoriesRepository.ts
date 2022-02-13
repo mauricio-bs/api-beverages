@@ -7,9 +7,9 @@ export interface ICategoriesRepository {
   // Massive Searches
   findMany(): Promise<Category[]>
   // Save
-  store(name: string, imageUrl: string): Promise<void>
+  store(category: Category): Promise<void>
   // Update
-  update(id: number, dataToUpdate: Category): Promise<void>
+  update(id: number, dataToUpdate: Partial<Category>): Promise<void>
   // Delete
   delete(id: number): Promise<void>
 }

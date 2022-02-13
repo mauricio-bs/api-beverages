@@ -89,11 +89,11 @@ model City {
 model Beverage {
   id                 String               @id @default(uuid())
   name               String
-  description        String
-  sotck_quantity     Int
+  description        String?
+  sotck_quantity     Int                  @default(0)
   price              Decimal
-  path               String
-  isActive           Boolean
+  imageUrl           String?
+  isActive           Boolean              @default(true)
   // Foreign Keys
   BeverageCategories BeverageCategories[]
   Sale               Sale?                @relation(fields: [saleId], references: [id])
@@ -104,14 +104,15 @@ model Beverage {
 }
 
 model Category {
-  id          Int                  @id @default(autoincrement())
-  description String
-  isActive    Boolean
+  id        Int                  @id @default(autoincrement())
+  name      String
+  isActive  Boolean              @default(true)
+  imageUrl  String?
   // Foreign Keys
-  beverages   BeverageCategories[]
+  beverages BeverageCategories[]
   // Timestamps
-  createdAt   DateTime             @default(now())
-  updatedAt   DateTime             @updatedAt
+  createdAt DateTime             @default(now())
+  updatedAt DateTime             @updatedAt
 }
 
 model BeverageCategories {
@@ -122,6 +123,8 @@ model BeverageCategories {
   category   Category @relation(fields: [categoryId], references: [id])
   categoryId Int
   // Timestamps
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
 }
 
 model Sale {
