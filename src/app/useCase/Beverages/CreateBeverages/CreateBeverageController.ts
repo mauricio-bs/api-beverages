@@ -7,7 +7,8 @@ export class CreateBeverageController {
 
   async handle(req: Request, res: Response): Promise<Response> {
     try {
-      const { name, description, imageUrl, isActive, categories } = req.body
+      const { filename: imageUrl } = (req as any).file
+      const { name, description, isActive, categories } = req.body
 
       await this.createBeverageUseCase.execute({
         name,
