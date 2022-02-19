@@ -8,6 +8,8 @@ import { deleteBeverageController } from './app/useCase/Beverages/DeleteBeverage
 import { findManyBeverageController } from './app/useCase/Beverages/FindManyBeverages'
 import { findOneBeverageController } from './app/useCase/Beverages/FindOneBeverage'
 import { updateBeverageController } from './app/useCase/Beverages/UpdateBeverages'
+// Category
+// import { createCategoryController } from './app/useCase/Categories/CreateCategory'
 // Session
 import { signInController } from './app/useCase/Session'
 // User
@@ -31,25 +33,36 @@ routes.use(auth)
 
 // Users
 routes.get('/users', (req, res) => findManyUsersController.handle(req, res))
-routes.get('/users/:id', (req, res) => findOneUserController.handle(req, res))
-routes.put('/users/:id', (req, res) => updateUserController.handle(req, res))
-routes.delete('/users/:id', (req, res) => deleteUserController.handle(req, res))
+routes.get('/users/:userId', (req, res) =>
+  findOneUserController.handle(req, res)
+)
+routes.put('/users/:userId', (req, res) =>
+  updateUserController.handle(req, res)
+)
+routes.delete('/users/:userId', (req, res) =>
+  deleteUserController.handle(req, res)
+)
 
 // Beverages
-routes.get('/api/beverages', (req, res) =>
+routes.get('/beverages', (req, res) =>
   findManyBeverageController.handle(req, res)
 )
-routes.get('/api/beverages/:id', (req, res) =>
+routes.get('/beverages/:beverageId', (req, res) =>
   findOneBeverageController.handle(req, res)
 )
-routes.post('/api/beverages', upload.single('file'), (req, res) =>
+routes.post('/beverages', upload.single('file'), (req, res) =>
   createBeverageController.handle(req, res)
 )
-routes.put('/api/beverages/:id', upload.single('file'), (req, res) =>
+routes.put('/beverages/:beverageId', upload.single('file'), (req, res) =>
   updateBeverageController.handle(req, res)
 )
-routes.delete('/api/beverages/:id', (req, res) =>
+routes.delete('/beverages/:beverageId', (req, res) =>
   deleteBeverageController.handle(req, res)
 )
+
+// Category
+// routes.post('/category', upload.single('category'), (req, res) =>
+//   createCategoryController.handle(req, res)
+// )
 
 export default routes

@@ -6,7 +6,7 @@ export interface IBeverageRepository {
   findByName(name: string): Promise<Beverage | null>
   // Massive Search
   findMany(
-    categories?: Array<string>,
+    categories?: Array<number>,
     isActive?: boolean,
     name?: string
   ): Promise<Beverage[]>

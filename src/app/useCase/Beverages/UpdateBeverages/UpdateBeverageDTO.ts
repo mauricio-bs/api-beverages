@@ -1,10 +1,9 @@
-import { Category } from '../../../entities/Category'
-
 export interface IUpdateBeverageRequestDTO {
-  id?: string
   name: string
-  description?: string
-  imageUrl?: string
+  description: string | null
+  imageUrl: string | null
   isActive: boolean
-  categories?: Category[]
+  price: number
+  stock_quantity?: number
+  categories?: Array<number>
 }

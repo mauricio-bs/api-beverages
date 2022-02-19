@@ -3,8 +3,8 @@ import { PostgresBeveragesRepository } from '../../../repositores/implementation
 export class FindOneBeveragesUseCase {
   constructor(private beveragesRepository: PostgresBeveragesRepository) {}
 
-  async execute(id: string) {
-    const beverages = await this.beveragesRepository.findById(id)
+  async execute(beverageId: string) {
+    const beverages = await this.beveragesRepository.findById(beverageId)
 
     return beverages
   }

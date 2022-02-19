@@ -7,9 +7,9 @@ export class FindOneBeverageController {
 
   async handle(req: Request, res: Response) {
     try {
-      const { id } = req.params
+      const { beverageId } = req.params
 
-      const beverage = await this.findOneBeveragesUseCase.execute(id)
+      const beverage = await this.findOneBeveragesUseCase.execute(beverageId)
 
       return res.status(200).json(beverage)
     } catch (err) {

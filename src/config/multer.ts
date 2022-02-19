@@ -14,7 +14,7 @@ const cloudStorage = new CloudinaryStorage({
       fileFilter: (
         req: any,
         file: { mimetype: string },
-        cb: (arg0: Error, arg1?: boolean) => any
+        cb: (arg0: Error | null, arg1?: boolean) => any
       ) => {
         const allowMimes = ['image/jpeg', 'image/png']
 

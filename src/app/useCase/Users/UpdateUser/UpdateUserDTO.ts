@@ -1,5 +1,5 @@
-export interface ICreateUserRequestDTO {
-  id: string
+export interface IUpdateUserRequestDTO {
+  userId: string
   name: string
   email: string
   password: string

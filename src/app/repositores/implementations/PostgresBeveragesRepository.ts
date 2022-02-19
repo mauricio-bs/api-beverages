@@ -26,24 +26,36 @@ export class PostgresBeveragesRepository implements IBeverageRepository {
   }
 
   async findMany(
-    categories?: Array<string>,
+    categories?: Array<number>,
     isActive?: boolean,
     name?: string
   ): Promise<Beverage[]> {
     try {
-      let conditions = []
-
-      categories && conditions.push({ categoryId: { equals: categories } })
-      isActive && conditions.push({ isActive: { equals: isActive } })
-
-      if (name) {
-        const arrQuery = name.split(' ')
-        conditions.push({ name: { hasEvery: arrQuery } })
-      }
-
       const beverages = await prisma.beverage.findMany({
         where: {
-          AND: conditions
+          AND: [
+            {
+              isActive: {
+                equals: isActive
+              }
+            },
+            {
+              name: {
+                in: name?.split(' ')
+              }
+            },
+            {
+              categories: {
+                some: {
+                  category: {
+                    id: {
+                      in: categories
+                    }
+                  }
+                }
+              }
+            }
+          ]
         }
       })
 
@@ -57,10 +69,18 @@ export class PostgresBeveragesRepository implements IBeverageRepository {
 
   async store(beverage: Beverage): Promise<void> {
     try {
-      const { name, description, categories, imageUrl, isActive } = beverage
+      const { name, description, imageUrl, isActive, price, stock_quantity } =
+        beverage
 
       await prisma.beverage.create({
-        data: { name, description, categories, imageUrl, isActive }
+        data: {
+          name,
+          description,
+          imageUrl,
+          isActive,
+          price,
+          stock_quantity
+        }
       })
     } catch (err) {
       throw new Error(err)
@@ -69,11 +89,19 @@ export class PostgresBeveragesRepository implements IBeverageRepository {
 
   async update(id: string, beverage: Partial<Beverage>): Promise<void> {
     try {
-      const { name, description, categories, imageUrl, isActive } = beverage
+      const { name, description, imageUrl, isActive, price, stock_quantity } =
+        beverage
 
       await prisma.beverage.update({
         where: { id },
-        data: { name, description, categories, imageUrl, isActive }
+        data: {
+          name,
+          description,
+          imageUrl,
+          isActive,
+          price,
+          stock_quantity
+        }
       })
     } catch (err) {
       throw new Error(err)

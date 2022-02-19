@@ -8,14 +8,17 @@ export class CreateBeverageController {
   async handle(req: Request, res: Response): Promise<Response> {
     try {
       const { filename: imageUrl } = (req as any).file
-      const { name, description, isActive, categories } = req.body
+      const { name, description, isActive, categories, price, stock_quantity } =
+        req.body
 
       await this.createBeverageUseCase.execute({
         name,
         description,
         imageUrl,
         isActive,
-        categories
+        categories,
+        price,
+        stock_quantity
       })
 
       return res.status(201).send()

@@ -6,7 +6,9 @@ export class Beverage {
   public description: string | null
   public imageUrl: string | null
   public isActive: boolean
-  public categories?: Array<number>
+  public price: number
+  public stock_quantity?: number
+  public categories?: Array<Object>
 
   constructor(props: Omit<Beverage, 'id'>, id?: string) {
     Object.assign(this, props)

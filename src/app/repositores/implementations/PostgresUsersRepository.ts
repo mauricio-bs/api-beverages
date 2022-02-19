@@ -5,7 +5,7 @@ import { User } from '../../entities/User'
 import { IUsersRepository } from '../IUsersRepository'
 
 export class PostgresUsersRepository implements IUsersRepository {
-  async findById(id: string): Promise<User | null> {
+  async findById(id: string): Promise<Partial<User> | null> {
     try {
       const user = await prisma.user.findUnique({ where: { id } })
       if (!user) throw new Error('User not found')
@@ -26,7 +26,7 @@ export class PostgresUsersRepository implements IUsersRepository {
     }
   }
 
-  async findMany(admin?: boolean, isActive?: boolean): Promise<User[]> {
+  async findMany(admin?: boolean, isActive?: boolean): Promise<User[] | null> {
     try {
       const users = await prisma.user.findMany({
         where: {

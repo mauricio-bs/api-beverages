@@ -6,12 +6,12 @@ export class UpdateUserController {
   constructor(private updateUserUseCase: UpdateUserUseCase) {}
 
   async handle(req: Request, res: Response): Promise<Response> {
-    const { id } = req.params
+    const { userId } = req.params
     const { name, email, password, admin, isActive, birthDate } = req.body
 
     try {
       await this.updateUserUseCase.execute({
-        id,
+        userId,
         name,
         email,
         password,

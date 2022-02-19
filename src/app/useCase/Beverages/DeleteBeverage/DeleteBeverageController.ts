@@ -6,9 +6,9 @@ export class DeleteBeverageController {
   constructor(private deleteBeverageUseCase: DeleteBeverageUseCase) {}
 
   async handle(req: Request, res: Response) {
-    const { id } = req.body
+    const { beverageId } = req.body
     try {
-      await this.deleteBeverageUseCase.execute(id)
+      await this.deleteBeverageUseCase.execute(beverageId)
 
       return res.status(202).send()
     } catch (err) {

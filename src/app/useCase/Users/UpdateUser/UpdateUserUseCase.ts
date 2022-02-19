@@ -1,11 +1,16 @@
 import { User } from './../../../entities/User'
 import { IUsersRepository } from './../../../repositores/IUsersRepository'
-import { ICreateUserRequestDTO } from './UpdateUserDTO'
+import { IUpdateUserRequestDTO } from './UpdateUserDTO'
 
 export class UpdateUserUseCase {
   constructor(private usersRepository: IUsersRepository) {}
 
-  async execute(userInformations: ICreateUserRequestDTO) {
+  async execute(userInformations: IUpdateUserRequestDTO) {
+    const userExists = await this.usersRepository.findById(
+      userInformations.userId
+    )
+    if (!userExists) throw new Error('User not found')
+
     if (userInformations?.email) {
       const emailAlreadyRegistered = await this.usersRepository.findByEmail(
         userInformations.email
@@ -13,7 +18,7 @@ export class UpdateUserUseCase {
 
       if (
         !!emailAlreadyRegistered &&
-        emailAlreadyRegistered.id !== userInformations.id
+        emailAlreadyRegistered.id !== userInformations.userId
       ) {
         throw new Error('Email already registered')
       }
@@ -21,6 +26,6 @@ export class UpdateUserUseCase {
 
     const user = new User(userInformations)
 
-    await this.usersRepository.update(userInformations.id, user)
+    await this.usersRepository.update(userInformations.userId, user)
   }
 }

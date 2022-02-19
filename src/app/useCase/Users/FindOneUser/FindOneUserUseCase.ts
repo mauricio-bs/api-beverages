@@ -4,6 +4,9 @@ export class FindOneUserUseCase {
 
   async execute(id: string) {
     const user = await this.usersRepository.findById(id)
+
+    if (user) delete user.password
+
     return user
   }
 }

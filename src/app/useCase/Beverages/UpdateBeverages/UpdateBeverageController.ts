@@ -7,15 +7,25 @@ export class UpdateBeverageController {
 
   async handle(req: Request, res: Response): Promise<Response> {
     try {
-      const { id } = req.params
-      const { name, description, imageUrl, isActive, categories } = req.body
-
-      await this.updateBeverageUseCase.execute(id, {
+      const { beverageId } = req.params
+      const {
         name,
         description,
         imageUrl,
         isActive,
-        categories
+        categories,
+        price,
+        stock_quantity
+      } = req.body
+
+      await this.updateBeverageUseCase.execute(beverageId, {
+        name,
+        description,
+        imageUrl,
+        isActive,
+        categories,
+        price,
+        stock_quantity
       })
 
       return res.status(200).send()

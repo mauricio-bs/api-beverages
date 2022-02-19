@@ -1,4 +1,4 @@
 export interface FindManyUsersRequestDTO {
-  isActive?: boolean
-  admin?: boolean
+  isActive?: any
+  admin?: any
 }

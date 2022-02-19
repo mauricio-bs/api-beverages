@@ -7,7 +7,7 @@ export class FindManyUsersController {
 
   async handle(req: Request, res: Response) {
     try {
-      const { admin, isActive } = req.body
+      const { admin, isActive } = req.query
 
       const users = await this.findManyUsersUseCase.execute({
         admin,

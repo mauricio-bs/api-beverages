@@ -1,5 +1,5 @@
 export interface FindManyBeveragesRequestDTO {
   isActive?: boolean
-  categories?: Array<string>
+  categories?: Array<number>
   name?: string
 }

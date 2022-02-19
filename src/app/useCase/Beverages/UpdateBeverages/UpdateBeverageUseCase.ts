@@ -4,12 +4,12 @@ import { IUpdateBeverageRequestDTO } from './UpdateBeverageDTO'
 export class UpdateBeverageUseCase {
   constructor(private beveragesRepository: IBeverageRepository) {}
 
-  async execute(id: string, beverage: IUpdateBeverageRequestDTO) {
+  async execute(beverageId: string, beverage: IUpdateBeverageRequestDTO) {
     const beverageWthSameName = await this.beveragesRepository.findByName(
       beverage.name
     )
 
-    if (beverageWthSameName.id !== id) {
+    if (beverageWthSameName && beverageWthSameName.id !== beverageId) {
       throw new Error('Beverage name already registered')
     }
 
