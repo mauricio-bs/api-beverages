@@ -7,7 +7,7 @@
 /build
 
 # Tests
-/coverage
+__test__/coverage
 .vscode
 
 npm-debug.log*
