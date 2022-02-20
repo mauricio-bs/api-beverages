@@ -1,3 +1,5 @@
+import { hash } from 'bcryptjs'
+
 import { User } from '../../../entities/User'
 import { IUsersRepository } from './../../../repositores/IUsersRepository'
 import { ICreateUserRequestDTO } from './CreateUserDTO'
@@ -13,6 +15,8 @@ export class CreateUserUseCase {
     if (emailAlreadyRegistered) {
       throw new Error('Email already registered')
     }
+
+    userInformations.password = await hash(userInformations.password, 10)
 
     const user = new User(userInformations)
 

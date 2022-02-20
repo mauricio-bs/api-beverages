@@ -1,5 +1,3 @@
-import { hash } from 'bcryptjs'
-
 import prisma from '../../../prisma/prisma'
 import { User } from '../../entities/User'
 import { IUsersRepository } from '../IUsersRepository'
@@ -46,8 +44,6 @@ export class PostgresUsersRepository implements IUsersRepository {
   async store(user: User): Promise<void> {
     try {
       let { name, email, password, admin, isActive } = user
-
-      password = await hash(password, 10)
 
       await prisma.user.create({
         data: { name, email, password, admin, isActive }
