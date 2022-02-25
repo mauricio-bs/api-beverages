@@ -4,10 +4,13 @@ export class FindManyUsersUseCase {
   constructor(private usersRepository: IUsersRepository) {}
 
   async execute(params: FindManyUsersRequestDTO) {
-    const users = await this.usersRepository.findMany(
-      params.admin,
-      params.isActive
-    )
+    let admin
+    let isActive
+
+    if (params.admin) admin = params.admin === 'true'
+    if (params.isActive) isActive = params.isActive === 'true'
+
+    const users = await this.usersRepository.findMany(admin, isActive)
 
     let formatedUsers
     // Remove password from users

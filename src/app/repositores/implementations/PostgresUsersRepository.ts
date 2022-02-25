@@ -28,10 +28,12 @@ export class PostgresUsersRepository implements IUsersRepository {
     try {
       const users = await prisma.user.findMany({
         where: {
-          AND: [
-            { admin: { equals: admin } },
-            { isActive: { equals: isActive } }
-          ]
+          admin: {
+            equals: admin
+          },
+          isActive: {
+            equals: isActive
+          }
         }
       })
 
