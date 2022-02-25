@@ -7,7 +7,7 @@ export class Beverage {
   public imageUrl: string | null
   public isActive: boolean
   public price: number
-  public stock_quantity?: number
+  public stock_quantity: number | null
   public categories?: Array<Object>
 
   constructor(props: Omit<Beverage, 'id'>, id?: string) {

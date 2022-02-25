@@ -4,6 +4,6 @@ export interface IUpdateBeverageRequestDTO {
   imageUrl: string | null
   isActive: boolean
   price: number
-  stock_quantity?: number
+  stock_quantity: number | null
   categories?: Array<number>
 }
