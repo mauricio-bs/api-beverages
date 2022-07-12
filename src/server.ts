@@ -1,9 +1,7 @@
-import { app } from './app'
+import { httpServer } from './app'
 require('dotenv/config')
 
-const PORT = process.env.PORT || 5000
-
-app.listen(PORT, () => {
-  console.log(`Server running on http://localhost:${PORT}`)
+httpServer.listen(process.env.PORT, () => {
+  console.log(`Server running on http://localhost:${process.env.PORT}`)
   console.log('environment: ', process.env.NODE_ENV)
 })

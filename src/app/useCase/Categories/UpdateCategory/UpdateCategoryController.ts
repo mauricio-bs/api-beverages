@@ -8,14 +8,13 @@ export class UpdateCategoryController {
   async handle(req: Request, res: Response): Promise<Response> {
     try {
       const { categoryId } = req.params
-      const { filename: imageUrl } = req.file
+      const { filename: imageUrl } = (req as any).file
       const { name, isActive } = req.body
 
-      await this.updateCategoryUseCase.execute({
+      await this.updateCategoryUseCase.execute(Number(categoryId), {
         name,
         imageUrl,
-        isActive,
-        categoryId: Number(categoryId)
+        isActive
       })
 
       return res.status(201).send()

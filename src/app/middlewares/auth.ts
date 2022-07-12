@@ -8,11 +8,13 @@ export default async (
   res: Response,
   next: NextFunction
 ) => {
-  const authToken: any = req.headers.authorization
+  const authToken: string = req.headers.authorization
 
-  if (!authToken) res.status(401).json({ error: 'Token not provided' })
+  if (!authToken) {
+    res.status(401).json({ error: 'Token not provided' })
+  }
 
-  const [, token] = authToken.split(' ')
+  const token = authToken.split(' ')[1]
 
   try {
     verify(token, authConfig.secret, (err: any, decoded: any) => {

@@ -3,6 +3,7 @@ export interface IUpdateUserRequestDTO {
   name: string
   email: string
   password: string
+  confirmPassword: string
   birthDate: string | null
   admin: boolean
   isActive: boolean

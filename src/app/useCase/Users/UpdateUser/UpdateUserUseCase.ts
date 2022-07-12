@@ -17,11 +17,19 @@ export class UpdateUserUseCase {
       )
 
       if (
-        !!emailAlreadyRegistered &&
+        emailAlreadyRegistered &&
         emailAlreadyRegistered.id !== userInformations.userId
       ) {
         throw new Error('Email already registered')
       }
+    }
+
+    if (
+      userInformations.password &&
+      userInformations.confirmPassword &&
+      userInformations.password !== userInformations.confirmPassword
+    ) {
+      throw new Error('Passwords does not match')
     }
 
     const user = new User(userInformations)

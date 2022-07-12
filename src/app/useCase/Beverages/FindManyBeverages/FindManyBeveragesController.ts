@@ -7,7 +7,7 @@ export class FindManyBeveragesController {
 
   async handle(req: Request, res: Response) {
     try {
-      const { isActive, categories, name } = req.body
+      const { isActive, categories, name } = req.query
 
       const beverages = await this.findManyBeveragesUseCase.execute({
         isActive,

@@ -4,13 +4,13 @@ import { UpdateCategoryRequestDTO } from './UpdateCategoryDTO'
 export class UpdateCategoryUseCase {
   constructor(private categoriesRepository: ICategoriesRepository) {}
 
-  async execute(categoryInfo: UpdateCategoryRequestDTO) {
-    const { name, imageUrl, isActive, categoryId } = categoryInfo
+  async execute(categoryId: number, categoryInfo: UpdateCategoryRequestDTO) {
+    const { name, imageUrl, isActive } = categoryInfo
 
     const categoryNameAlreadyExists =
       await this.categoriesRepository.findByName(name)
 
-    if (categoryNameAlreadyExists.id !== Number(categoryId)) {
+    if (categoryNameAlreadyExists.id !== categoryId) {
       throw new Error('Category name already exists, please try another name')
     }
 

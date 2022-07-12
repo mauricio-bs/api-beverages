@@ -6,7 +6,7 @@
   "scripts": {
     "pretest": "NODE_ENV=test yarn prisma migrate dev",
     "test": "NOVE_ENV=test jest",
-    "posttest": "NODE_ENV=test yarn prisma migrade reset",
+    "posttest": "NODE_ENV=test yarn prisma migrate reset",
     "dev": "NODE_ENV=development ts-node-dev src/server.ts",
     "debug": "ts-node-dev src/server.ts",
     "start": "NODE_ENV=production node"
@@ -61,6 +61,7 @@
     "prettier": "^2.3.2",
     "sqlite3": "^5.0.2",
     "supertest": "^6.2.2",
+    "ts-jest": "^27.1.3",
     "ts-node-dev": "^1.1.8"
   }
 }

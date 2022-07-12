@@ -10,7 +10,7 @@ export class DeleteBeverageController {
     try {
       await this.deleteBeverageUseCase.execute(beverageId)
 
-      return res.status(202).send()
+      return res.status(204).send()
     } catch (err) {
       return res.status(400).json({ message: err.message })
     }

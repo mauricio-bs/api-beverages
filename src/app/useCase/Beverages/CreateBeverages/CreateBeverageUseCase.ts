@@ -9,10 +9,10 @@ export class CreateBeverageUseCase {
       beverage.name
     )
 
-    if (beverageWthSameName?.name) {
+    if (beverageWthSameName) {
       throw new Error('Beverage name already registered')
-    } else {
-      await this.beveragesRepository.store(beverage)
     }
+
+    await this.beveragesRepository.store(beverage)
   }
 }

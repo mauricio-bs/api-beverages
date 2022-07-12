@@ -7,7 +7,15 @@ export class UpdateUserController {
 
   async handle(req: Request, res: Response): Promise<Response> {
     const { userId } = req.params
-    const { name, email, password, admin, isActive, birthDate } = req.body
+    const {
+      name,
+      email,
+      password,
+      confirmPassword,
+      admin,
+      isActive,
+      birthDate
+    } = req.body
 
     try {
       await this.updateUserUseCase.execute({
@@ -15,6 +23,7 @@ export class UpdateUserController {
         name,
         email,
         password,
+        confirmPassword,
         birthDate,
         admin,
         isActive

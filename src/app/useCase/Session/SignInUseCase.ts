@@ -18,24 +18,31 @@ export class SignInUseCase {
       throw new Error('Make sure yur password or email are correct')
     }
 
-    if (!(await schema.isValid({ email, password })))
+    if (!(await schema.isValid({ email, password }))) {
       userEmailOrPasswordIncorrect()
+    }
 
     const user = await this.usersRepository.findByEmail(email)
 
-    if (!user) userEmailOrPasswordIncorrect()
-    else {
-      if (!compare(password, user.password)) userEmailOrPasswordIncorrect()
+    if (!user) {
+      userEmailOrPasswordIncorrect()
+    } else {
+      if (!user.isActive)
+        throw new Error('User disabled, contact the system admin')
+
+      if (!compare(password, user.password)) {
+        userEmailOrPasswordIncorrect()
+      }
 
       return {
-        id: user.id,
         email,
         name: user.name,
         token: jwt.sign(
-          { id: user.id, userName: user.name },
+          { userName: user.name, admin: user.admin },
           authConfig.secret,
           {
-            expiresIn: authConfig.expiresIn
+            expiresIn: authConfig.expiresIn,
+            subject: user.id
           }
         )
       }
